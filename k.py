@@ -1,4 +1,5 @@
 import pandas as pd
+import string
 def standardize(messy):
     print(f"Loading raw data from {messy}...")
     df = pd.read_csv(messy)
@@ -18,4 +19,20 @@ def standardize(messy):
     return df
 Clean_dataset=standardize(r"C:\Users\DELL\OneDrive\Desktop\DATA\Reviews.csv")
 Clean_dataset.to_csv(r"C:\Users\DELL\OneDrive\Desktop\DATA\Clean_reviews.csv", index=False)
-print("Cleaned data saved to Clean_reviews.csv") 
+
+def clean_text(text):
+    text=text.lower()
+    text = text.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ')
+    translator=str.maketrans('', '', string.punctuation)
+    text=text.translate(translator)
+    text = ' '.join(text.split())
+    return text
+
+def preprocess_text(df):
+    df['review_text'] = df['review_text'].apply(clean_text)
+    df=df[df['review_text']!=""]
+    return df
+Final_Dataset=preprocess_text(Clean_dataset)
+Final_Dataset.to_csv(r"C:\Users\DELL\OneDrive\Desktop\DATA\Clean_reviews.csv", index=False)
+print("Cleaned and preprocessed data saved to Final_reviews.csv")
+
