@@ -5,7 +5,7 @@ import time
 import os
 
 def main():
-    print("🚀 Starting Fast Indexing Test (10,000 reviews)...")
+    print("🚀 Starting Fast Indexing Test (10,000 reviews with spaCy)...")
     start_time = time.time()
     
     # Calculate paths
@@ -20,7 +20,10 @@ def main():
     # 1. Initialize Vector Store (Uses BAAI/bge-small-en-v1.5)
     vs = VectorStore()
     
-    # 2. Process exactly 10,000 reviews
+    # 2. Clear existing data to ensure new preprocessing is used
+    vs.clear_collection()
+    
+    # 3. Process exactly 10,000 reviews
     limit = 10000
     batch_size = 2500 # 4 batches total
     total_indexed = 0

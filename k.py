@@ -11,7 +11,7 @@ def standardize(messy):
         "Score":"rating(out of 5)",
         "Time":"review_date"
     }
-    #"Standardizing column names..."
+    #"Standardizing column names"
     df.rename(columns=column_mapping, inplace=True)
     mandatory_columns = ['product_id', 'review_text', 'rating(out of 5)', 'review_date']
     df=df[mandatory_columns]
@@ -21,10 +21,10 @@ def standardize(messy):
     return df
 
 def clean_text(text):
-    text=str(text).lower()
+    text=str(text)
+    # Remove HTML line breaks
     text = text.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ')
-    translator=str.maketrans('', '', string.punctuation)
-    text=text.translate(translator)
+    # Normalize whitespace but KEEP punctuation
     text = ' '.join(text.split())
     return text
 
