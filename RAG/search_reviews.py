@@ -1,25 +1,25 @@
+import argparse
 from vector_store import VectorStore
-import sys
 import os
+import sys
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python RAG/search_reviews.py '<search_query>' [product_id]")
-        return
-
-    query = sys.argv[1]
-    product_id = sys.argv[2] if len(sys.argv) > 2 else None
+    parser = argparse.ArgumentParser(description="Search reviews for a specific aspect.")
+    parser.add_argument("aspect", type=str, help="The aspect to search for (e.g., 'taste')")
+    parser.add_argument("product_id", type=str, nargs='?', help="Optional: The Product ID to filter by", default=None)
     
+    args = parser.parse_args()
+
     # Initialize VectorStore
     vs = VectorStore()
     
-    print(f"\n🔍 Searching for: '{query}'" + (f" (Product: {product_id})" if product_id else ""))
+    print(f"\n🔍 Searching for: '{args.aspect}'" + (f" (Product: {args.product_id})" if args.product_id else ""))
     print("=" * 60)
     
-    results = vs.search(query, product_id=product_id, top_k=10)
+    results = vs.search(args.aspect, product_id=args.product_id, top_k=10)
     
     # Display results
-    if not results or not results['documents'][0]:
+    if not results or not results['documents'] or not results['documents'][0]:
         print("No matches found.")
         return
 
@@ -35,7 +35,7 @@ def main():
         meta = metadatas[i]
         dist = distances[i]
         
-        # Simple deduplication (many reviews have the exact same sentence)
+        # Simple deduplication
         if text.strip().lower() in seen_texts:
             continue
         seen_texts.add(text.strip().lower())
