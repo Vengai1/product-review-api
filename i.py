@@ -14,7 +14,7 @@ def guess_product_name_v2(filepath, target_product_id):
     all_text = " ".join(product_df['review_text'].astype(str).tolist())
     words = all_text.split()
     
-    # Expanded Stop Words: Now includes adjectives and extra filler words!
+    #Expanded Stop Words: Now includes adjectives and extra filler words!
     boring_words = {
         'the', 'a', 'and', 'to', 'of', 'in', 'is', 'it', 'for', 'this', 'that',
         'i', 'my', 'you', 'with', 'on', 'was', 'as', 'are', 'at', 'but', 'be',
