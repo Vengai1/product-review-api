@@ -1,5 +1,7 @@
 import pandas as pd
 import string
+import os
+
 def standardize(messy):
     print(f"Loading raw data from {messy}...")
     df = pd.read_csv(messy)
@@ -17,11 +19,9 @@ def standardize(messy):
     df['review_date'] = pd.to_datetime(df['review_date'], unit='s').dt.strftime('%Y-%m-%d')
     #"Data standardized"
     return df
-Clean_dataset=standardize(r"C:\Users\DELL\OneDrive\Desktop\DATA\Reviews.csv")
-Clean_dataset.to_csv(r"C:\Users\DELL\OneDrive\Desktop\DATA\Clean_reviews.csv", index=False)
 
 def clean_text(text):
-    text=text.lower()
+    text=str(text).lower()
     text = text.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ')
     translator=str.maketrans('', '', string.punctuation)
     text=text.translate(translator)
@@ -32,7 +32,17 @@ def preprocess_text(df):
     df['review_text'] = df['review_text'].apply(clean_text)
     df=df[df['review_text']!=""]
     return df
-Final_Dataset=preprocess_text(Clean_dataset)
-Final_Dataset.to_csv(r"C:\Users\DELL\OneDrive\Desktop\DATA\Clean_reviews.csv", index=False)
-print("Cleaned and preprocessed data saved to Final_reviews.csv")
 
+if __name__ == "__main__":
+    # Define paths relative to the project root
+    input_path = os.path.join("data", "Reviews.csv")
+    output_path = os.path.join("data", "Clean_reviews.csv")
+    
+    # Ensure data directory exists
+    os.makedirs("data", exist_ok=True)
+
+    Clean_dataset = standardize(input_path)
+    
+    Final_Dataset = preprocess_text(Clean_dataset)
+    Final_Dataset.to_csv(output_path, index=False)
+    print(f"Cleaned and preprocessed data saved to {output_path}")

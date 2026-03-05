@@ -14,7 +14,8 @@ class VectorStore:
         
         # Persistent storage locally in a folder named 'chroma_db'
         self.client = chromadb.PersistentClient(path=chroma_path)
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        # Upgraded to BAAI/bge-small-en-v1.5 for much better retrieval quality on CPU
+        self.model = SentenceTransformer('BAAI/bge-small-en-v1.5')
         
         # Create or get existing collection
         self.collection = self.client.get_or_create_collection(name=collection_name)
@@ -50,7 +51,11 @@ class VectorStore:
 
     def search(self, query: str, product_id: str = None, top_k: int = 5):
         """Search the collection with a natural language query."""
-        query_embedding = self.model.encode([query]).tolist()
+        # BGE models require this instruction for the query (but not the documents) to perform best
+        instruction = "Represent this sentence for searching relevant passages: "
+        full_query = instruction + query
+        
+        query_embedding = self.model.encode([full_query]).tolist()
         
         where_filter = None
         if product_id:

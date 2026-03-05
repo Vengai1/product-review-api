@@ -1,42 +1,53 @@
-from data_manager import load_and_clean_data, chunk_text_into_sentences
+import pandas as pd
+from data_manager import chunk_text_into_sentences
 from vector_store import VectorStore
 import time
 import os
 
 def main():
-    print("Starting indexing process...")
+    print("🚀 Starting Fast Indexing Test (10,000 reviews)...")
     start_time = time.time()
     
-    # Calculate the project root (assuming this file is in project_root/RAG/)
+    # Calculate paths
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(current_dir)
-    data_path = os.path.join(project_root, "data", "Reviews.csv")
+    data_path = os.path.join(project_root, "data", "Clean_reviews.csv")
     
-    # 1. Load data
-    df = load_and_clean_data(data_path)
-    print(f"Total reviews in CSV: {len(df)}")
+    if not os.path.exists(data_path):
+        print(f"❌ Error: {data_path} not found. Please run k.py first.")
+        return
     
-    # Limit for demonstration to first 100 rows
-    limit = 100
-    df_sample = df.head(limit)
-    print(f"Processing first {limit} reviews...")
-    
-    # 2. Chunk text
-    chunks = chunk_text_into_sentences(df_sample)
-    print(f"Total sentences to index: {len(chunks)}")
-    
-    # 3. Initialize and add to Vector Store
+    # 1. Initialize Vector Store (Uses BAAI/bge-small-en-v1.5)
     vs = VectorStore()
-    vs.add_to_index(chunks)
     
+    # 2. Process exactly 10,000 reviews
+    limit = 10000
+    batch_size = 2500 # 4 batches total
+    total_indexed = 0
+    
+    print(f"Reading first {limit} reviews from {data_path}...")
+    
+    # Use pandas chunking
+    for chunk_df in pd.read_csv(data_path, chunksize=batch_size, nrows=limit):
+        # Map k.py columns
+        if 'rating(out of 5)' in chunk_df.columns:
+            chunk_df = chunk_df.rename(columns={'rating(out of 5)': 'rating'})
+            
+        # 3. Chunk reviews into sentences
+        chunks = chunk_text_into_sentences(chunk_df)
+        
+        if chunks:
+            # 4. Add to Vector Store
+            # Note: We'll leverage standard multi-threading in the encode step
+            vs.add_to_index(chunks)
+            
+            total_indexed += len(chunk_df)
+            elapsed = time.time() - start_time
+            print(f"✅ Indexed {total_indexed}/{limit} reviews. Elapsed: {elapsed:.2f}s")
+
     end_time = time.time()
-    print(f"Indexing completed in {end_time - start_time:.2f} seconds.")
-    
-    # 4. Quick verification search
-    print("\nVerification Search for 'quality':")
-    results = vs.search("quality", top_k=3)
-    for i, doc in enumerate(results['documents'][0]):
-        print(f"Result {i+1}: {doc}")
+    print(f"\n✨ Fast test completed in {end_time - start_time:.2f} seconds.")
+    print(f"Total reviews indexed: {total_indexed}")
 
 if __name__ == "__main__":
     main()
