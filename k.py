@@ -11,7 +11,7 @@ def standardize(messy):
         "Score":"rating(out of 5)",
         "Time":"review_date"
     }
-    #"Standardizing column names..."
+    #"Standardizing column names"
     df.rename(columns=column_mapping, inplace=True)
     mandatory_columns = ['product_id', 'review_text', 'rating(out of 5)', 'review_date']
     df=df[mandatory_columns]
