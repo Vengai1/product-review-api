@@ -1,13 +1,19 @@
 from data_manager import load_and_clean_data, chunk_text_into_sentences
 from vector_store import VectorStore
 import time
+import os
 
 def main():
     print("Starting indexing process...")
     start_time = time.time()
     
+    # Calculate the project root (assuming this file is in project_root/RAG/)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)
+    data_path = os.path.join(project_root, "data", "Reviews.csv")
+    
     # 1. Load data
-    df = load_and_clean_data('data/Reviews.csv')
+    df = load_and_clean_data(data_path)
     print(f"Total reviews in CSV: {len(df)}")
     
     # Limit for demonstration to first 100 rows

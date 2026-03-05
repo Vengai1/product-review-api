@@ -36,7 +36,12 @@ def chunk_text_into_sentences(df: pd.DataFrame) -> List[Tuple[str, str, int]]:
     return chunked_data
 
 if __name__ == "__main__":
-    df = load_and_clean_data('data/Reviews.csv')
+    import os
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)
+    data_path = os.path.join(project_root, "data", "Reviews.csv")
+    
+    df = load_and_clean_data(data_path)
     print(f"Loaded {len(df)} reviews.")
     chunks = chunk_text_into_sentences(df.head(5))
     print(f"Sample chunks: {len(chunks)}")

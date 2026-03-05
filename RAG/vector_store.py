@@ -2,12 +2,18 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 from typing import List, Tuple
 import uuid
+import os
 
 class VectorStore:
     def __init__(self, collection_name: str = "product_reviews"):
         """Initializes ChromaDB client and embedding model."""
+        # Calculate the project root (assuming this file is in project_root/RAG/)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir)
+        chroma_path = os.path.join(project_root, "chroma_db")
+        
         # Persistent storage locally in a folder named 'chroma_db'
-        self.client = chromadb.PersistentClient(path="./chroma_db")
+        self.client = chromadb.PersistentClient(path=chroma_path)
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
         
         # Create or get existing collection
