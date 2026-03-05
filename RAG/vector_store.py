@@ -20,6 +20,13 @@ class VectorStore:
         # Create or get existing collection
         self.collection = self.client.get_or_create_collection(name=collection_name)
 
+    def clear_collection(self):
+        """Deletes the current collection and recreates it to clear all data."""
+        name = self.collection.name
+        self.client.delete_collection(name=name)
+        self.collection = self.client.create_collection(name=name)
+        print(f"Collection '{name}' cleared.")
+
     def add_to_index(self, chunked_data: List[Tuple[str, str, int]]):
         """
         Embeds each sentence and stores it in the collection with metadata.

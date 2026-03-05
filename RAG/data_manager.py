@@ -1,6 +1,17 @@
 import pandas as pd
-import re
+import spacy
 from typing import List, Tuple
+
+# Load spaCy model for sentence splitting
+# We disable components we don't need for speed
+try:
+    nlp = spacy.load("en_core_web_sm", disable=["ner", "tagger", "lemmatizer", "attribute_ruler"])
+    # Add sentencizer if it's not already there (though en_core_web_sm usually uses dependency parser for sentences)
+    if "senter" not in nlp.pipe_names and "parser" not in nlp.pipe_names:
+        nlp.add_pipe("sentencizer")
+except Exception as e:
+    print(f"Warning: Could not load spaCy model: {e}")
+    nlp = None
 
 def load_and_clean_data(file_path: str) -> pd.DataFrame:
     """Loads Amazon Reviews CSV and drops rows with missing Text or ProductId."""
@@ -13,23 +24,24 @@ def load_and_clean_data(file_path: str) -> pd.DataFrame:
 
 def chunk_text_into_sentences(df: pd.DataFrame) -> List[Tuple[str, str, int]]:
     """
-    Splits each review into sentences using regex.
+    Splits each review into sentences using spaCy.
     Returns a list of tuples: (sentence, product_id, rating)
     """
     chunked_data = []
-    # Simple regex to split on . ! or ? followed by a space or end of string
-    sentence_pattern = re.compile(r'[^.!?]+[.!?]*')
     
     for _, row in df.iterrows():
         text = str(row['review_text'])
         product_id = row['product_id']
         rating = row['rating']
         
-        # Split into sentences
-        sentences = sentence_pattern.findall(text)
+        if nlp:
+            doc = nlp(text)
+            sentences = [sent.text.strip() for sent in doc.sents]
+        else:
+            # Fallback if spaCy is missing
+            sentences = [text]
         
         for sentence in sentences:
-            sentence = sentence.strip()
             if len(sentence) > 5: # Basic filter for noise
                 chunked_data.append((sentence, product_id, int(rating)))
                 

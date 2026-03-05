@@ -21,10 +21,10 @@ def standardize(messy):
     return df
 
 def clean_text(text):
-    text=str(text).lower()
+    text=str(text)
+    # Remove HTML line breaks
     text = text.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ')
-    translator=str.maketrans('', '', string.punctuation)
-    text=text.translate(translator)
+    # Normalize whitespace but KEEP punctuation
     text = ' '.join(text.split())
     return text
 
