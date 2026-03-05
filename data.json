@@ -1,0 +1,62 @@
+[
+  {
+    "product_id": "P001",
+    "review_text": "Absolutely love this! It works exactly as described and saves me so much time.",
+    "rating": 5,
+    "review_date": "2025-10-15"
+  },
+  {
+    "product_id": "P002",
+    "review_text": "It's okay. The build quality feels a bit cheap, but it gets the job done.",
+    "rating": 3,
+    "review_date": "2025-11-02"
+  },
+  {
+    "product_id": "P003",
+    "review_text": "Terrible experience. The item broke after just two uses. Do not recommend.",
+    "rating": 1,
+    "review_date": "2025-12-10"
+  },
+  {
+    "product_id": "P004",
+    "review_text": "Really happy with this purchase. The color is exactly like the pictures.",
+    "rating": 4,
+    "review_date": "2026-01-05"
+  },
+  {
+    "product_id": "P005",
+    "review_text": "A bit overpriced for what you get, but it functions well enough.",
+    "rating": 2,
+    "review_date": "2026-01-20"
+  },
+  {
+    "product_id": "P006",
+    "review_text": "Exceeded all my expectations! Shipping was also incredibly fast.",
+    "rating": 5,
+    "review_date": "2026-02-14"
+  },
+  {
+    "product_id": "P007",
+    "review_text": "Average product. Nothing special, but no major complaints either.",
+    "rating": 3,
+    "review_date": "2026-02-28"
+  },
+  {
+    "product_id": "P008",
+    "review_text": "The instructions were a bit unclear, but once I figured it out, it worked beautifully.",
+    "rating": 4,
+    "review_date": "2026-03-01"
+  },
+  {
+    "product_id": "P009",
+    "review_text": "Arrived with missing parts. Customer service has not responded to my emails.",
+    "rating": 1,
+    "review_date": "2026-03-03"
+  },
+  {
+    "product_id": "P010",
+    "review_text": "Perfect for everyday use. It's lightweight and very intuitive to use.",
+    "rating": 5,
+    "review_date": "2026-03-04"
+  }
+]
