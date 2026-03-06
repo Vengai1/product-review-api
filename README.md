@@ -27,7 +27,9 @@ product-review-api/
 ```
 
 ## **Prerequisites**
-* Python 3.9+, * pip, * virtual environment tool (optional)
+* Python 3.9+, 
+* pip, 
+* virtual environment tool (optional)
 
 ### **Installation and Setup**
 
