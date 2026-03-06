@@ -98,6 +98,7 @@ Sample Request:
 curl http://localhost:8001/items/B003VXFK44
 
 Sample Output:
+```
 {
   "product_id": "B003VXFK44",
   "status": "SUCCESS",
@@ -114,7 +115,7 @@ Sample Output:
     }
   ]
 }
-
+```
 ## Error Handling and Logging
 
 - Insufficient Data: 
