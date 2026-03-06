@@ -1,4 +1,12 @@
-# Product Review Insights API
+# Product Review Insights API (TeamApp)
+
+A high-performance RAG pipeline designed for intelligent product review analysis. Built with **Hybrid Clustering**, **LLM-based Aspect Extraction**, and **Vector Similarity Search**, this project transforms raw customer feedback into structured, actionable intelligence.
+
+[![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.42+-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![ChromaDB](https://img.shields.io/badge/Vector_DB-ChromaDB-yellow?style=flat)](https://www.trychroma.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 This project implements Task 5 from the AI and Programming Hackathon Challenge. It provides a Retrieval-Augmented Generation (RAG) pipeline to extract aspects, sentiment, and supporting evidence from a dataset of Amazon product reviews.
 
