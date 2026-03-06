@@ -31,18 +31,18 @@ product-review-api/
 * pip, 
 * virtual environment tool (optional)
 
-### **Installation and Setup**
+## **Installation and Setup**
 
-## 1. Clone The Repository:
+### 1. Clone The Repository:
 git clone [https://github.com/Vengai1/product-review-api.git](https://github.com/Vengai1/product-review-api.git)
 cd product-review-api
 
-## 2. Create and activate a virtual environment:
+### 2. Create and activate a virtual environment:
 
 python -m venv venv
-# On Windows:
+#### On Windows:
 venv\Scripts\activate
-# On macOS/Linux:
+#### On macOS/Linux:
 source venv/bin/activate
 
 ## 3. Install Dependencies:
@@ -51,24 +51,24 @@ pip install -r requirements.txt
 ## 4. Environment Variables:
 If your application requires API keys (e.g., OpenAI, HuggingFace, etc.) for the RAG pipeline, make sure to set them up in a .env file in the root directory.
 
-### **Running the application**
+## **Running the application**
 
-## 1. Start the API server
+### 1. Start the API server
 
 Run the main python script to launch the API:
 python main.py
 (If you are using FastAPI/Uvicorn or Flask, the console will output the local host address, typically http://localhost:8000 or http://127.0.0.1:5000)
 
-## 2. View Available Models:
+### 2. View Available Models:
 
 To check which LLM models are currently configured or available:
 python list_models.py
 
-## 3. Start the Frontend:
+### 3. Start the Frontend:
 
 Navigate to the frontend directory and follow its specific setup instructions, or if it is integrated into the Python backend (e.g., Gradio/Streamlit), it may launch automatically via main.py or gra.py.
 
-### **API Endpoints:**
+## **API Endpoints:**
 (Note: Update these based on your actual main.py routing)
 
 * GET / - Health check and API status.
