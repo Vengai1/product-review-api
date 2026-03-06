@@ -31,7 +31,7 @@ def read_root():
         "usage": "GET /insights/{product_id}"
     }
 
-@app.get("/insights/{product_id}")
+@app.get("/items/{product_id}")
 async def get_insights(product_id: str):
     """
     Fetches full RAG insights for a specific product.
