@@ -1,76 +1,104 @@
-# Product Review API
-A powerful, AI-driven Product Review API built with Python. This project leverages **Retrieval-Augmented Generation (RAG)** to intelligently process, query, and serve product reviews and related data. The repository also includes a dedicated frontend interface for seamless interaction.
+# Product Review Insights API (RAG Engine)
 
-## Features
+A high-performance RAG (Retrieval-Augmented Generation) pipeline that transforms thousands of raw Amazon reviews into structured, actionable insights. 
 
-* **RAG-Powered Insights:** Uses Retrieval-Augmented Generation to provide accurate, context-aware answers and summaries about product reviews.
-* **RESTful API:** Robust endpoints defined in `main.py` to handle data ingestion and client requests.
-* **Frontend Included:** A user-friendly interface (`front_end/` directory) to interact directly with the API.
-* **LLM Integration:** Tools to manage and list various models (`list_models.py`).
-* **JSON Data Handling:** Structured product review data management (`data.json`).
+This project uses K-Means clustering to identify top themes, analyzes sentiment per aspect, and extracts supporting evidence using a hybrid local-vector/cloud-LLM architecture.
+
+## Key Features
+
+*   Intelligent Aspect Extraction: Uses K-Means clustering to summarize large review sets (up to 10k+) into representative themes before LLM processing.
+*   Hybrid Sentiment Engine: Categorizes aspects as Pro, Con, or Mixed based on real customer star-ratings metadata.
+*   Evidence Selection: Automatically retrieves multiple relevant supporting sentences for every insight, ensuring zero hallucinations.
+*   Dynamic Scaling: Automatically adjusts the depth of analysis based on the number of available reviews.
+*   Professional Dashboard: Interactive Streamlit interface with a split-screen layout for summaries and categorized insights.
+
+## Tech Stack
+
+- NLP: spaCy (Sentence Segmentation)
+- Vector DB: ChromaDB (Persistent Storage)
+- Embeddings: BAAI/bge-small-en-v1.5
+- Intelligence: OpenRouter (GPT-4o-mini)
+- Backend: FastAPI & Uvicorn
+- Frontend: Streamlit
+- Analytics: scikit-learn (K-Means Clustering)
 
 ## Repository Structure
 
 ```text
 product-review-api/
-│
-├── RAG/                # Core Retrieval-Augmented Generation logic and embeddings
-├── front_end/          # Client-side UI to interact with the API
-├── main.py             # Main entry point and API application routing
-├── requirements.txt    # Python dependencies
-├── data.json           # Sample/Storage dataset for product reviews
-├── list_models.py      # Utility for configuring and listing available AI models
-├── gra.py              # Additional script / Gradio UI (if applicable)
-├── i.py / k.py         # Utility/Helper scripts
-├── .gitignore          # Git ignore configuration
-└── LICENSE             # MIT License
+├── main.py                     # Client-side API (Proxies requests to RAG Engine)
+├── RAG/
+│   ├── main.py                 # Core RAG Server (Handles analysis logic)
+│   ├── insight_engine.py       # Insight Generation Logic (LLM + Evidence)
+│   ├── cluster_aspect_extractor.py # K-Means Theme Discovery
+│   ├── vector_store.py         # ChromaDB Management & Sub-batching
+│   ├── data_manager.py         # spaCy Preprocessing & Sentence Splitting
+│   ├── index_data.py           # Script to populate the Vector Database
+│   └── search_reviews.py       # CLI tool for manual review searching
+├── front_end/
+│   └── dashboard.py            # Streamlit Dashboard UI
+├── data/
+│   ├── Reviews.csv             # Raw Dataset (Input)
+│   └── Clean_reviews.csv       # Preprocessed Data (Punctuation-preserved)
+├── k.py                        # Data Standardization & Cleaning Script
+└── .env                        # Configuration (OPENROUTER_API_KEY)
 ```
 
-## **Prerequisites**
-* Python 3.9+, 
-* pip, 
-* virtual environment tool (optional)
+## Installation & Setup
 
-## **Installation and Setup**
+1. Setup Environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # Linux/Mac
+   pip install -r requirements.txt
+   python -m spacy download en_core_web_sm
+   ```
 
-### 1. Clone The Repository:
-git clone [https://github.com/Vengai1/product-review-api.git](https://github.com/Vengai1/product-review-api.git)
-cd product-review-api
+2. Configure API Key:
+   Create a .env file in the root:
+   ```text
+   OPENROUTER_API_KEY=your_openrouter_key_here
+   ```
 
-### 2. Create and activate a virtual environment:
+3. Index the Data (Required before first run):
+   ```bash
+   python k.py
+   python RAG/index_data.py
+   ```
 
-python -m venv venv
-#### On Windows:
-venv\Scripts\activate
-#### On macOS/Linux:
-source venv/bin/activate
+## Running the Application
 
-## 3. Install Dependencies:
-pip install -r requirements.txt
+This system consists of two backend servers and one frontend dashboard.
 
-## 4. Environment Variables:
-If your application requires API keys (e.g., OpenAI, HuggingFace, etc.) for the RAG pipeline, make sure to set them up in a .env file in the root directory.
+### 1. Start the RAG Engine (Core Server)
+```bash
+python -m RAG.main
+```
+*Default: http://localhost:8000*
 
-## **Running the application**
-
-### 1. Start the API server
-
-Run the main python script to launch the API:
+### 2. Start the Client API (Gateway Server)
+```bash
 python main.py
-(If you are using FastAPI/Uvicorn or Flask, the console will output the local host address, typically http://localhost:8000 or http://127.0.0.1:5000)
+```
+*Default: http://localhost:8001*
 
-### 2. View Available Models:
+### 3. Start the Dashboard (Frontend)
+```bash
+streamlit run front_end/dashboard.py
+```
 
-To check which LLM models are currently configured or available:
-python list_models.py
+## API Endpoints
 
-### 3. Start the Frontend:
+### 1. Client Gateway API (main.py)
+This is the primary entry point for the frontend. It proxies requests to the RAG engine.
+* **GET `/items/{item_id}`**: Retrieves the processed insights for a product.
+    * **Response**: A structured JSON containing `summary`, `top_aspects`, `status`, and `confidence`.
 
-Navigate to the frontend directory and follow its specific setup instructions, or if it is integrated into the Python backend (e.g., Gradio/Streamlit), it may launch automatically via main.py or gra.py.
+### 2. RAG Engine API (RAG/main.py)
+The core analysis server.
+* **GET `/`**: Health check.
+* **GET `/items/{item_id}`**: Performs the actual RAG analysis (Clustering -> LLM -> Vector Search).
+* **Response**: Raw analysis data used by the Gateway.
 
-## **API Endpoints:**
-(Note: Update these based on your actual main.py routing)
-
-* GET / - Health check and API status.
-
-* GET /reviews/{product_id} - Retrieve reviews for a specific product.
+## License
+MIT License

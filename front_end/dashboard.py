@@ -4,8 +4,8 @@ import requests
 # Set page configuration
 st.set_page_config(page_title="Product Insights", page_icon="🛍️", layout="wide")
 
-# Backend Server Address
-API_BASE_URL = "http://10.68.198.227:8000"
+# Backend Gateway Address (pointing to your local Gateway API)
+API_BASE_URL = "http://localhost:8001"
 
 # Custom Styling
 st.markdown("""
