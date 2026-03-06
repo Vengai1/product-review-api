@@ -21,9 +21,19 @@ async def lifespan(app: FastAPI):
         try:
             # Matches the current RAG indexing limit of 20,000
             df = pd.read_csv(DATA_PATH, nrows=20000)
-            # Get unique IDs and sort them
-            app.state.products = sorted(df['product_id'].unique().tolist())
-            print(f"✅ Loaded {len(app.state.products)} unique product IDs.")
+            
+            # Count reviews per product
+            counts = df['product_id'].value_counts()
+            
+            # Create a list of formatted strings: "ID (X reviews)"
+            # We sort by the ID for consistency
+            product_list = []
+            for pid in sorted(counts.index):
+                count = counts[pid]
+                product_list.append(f"{pid} ({count} reviews)")
+            
+            app.state.products = product_list
+            print(f"✅ Loaded {len(app.state.products)} unique products with counts.")
         except Exception as e:
             print(f"❌ Error loading products: {e}")
             app.state.products = []

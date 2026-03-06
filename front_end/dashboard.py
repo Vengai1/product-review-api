@@ -43,7 +43,8 @@ else:
         index=None,
         placeholder="Type or select a product ID...",
     )
-    item_id = selected_item
+    # Extract only the ID part: "B003VXFK44 (455 reviews)" -> "B003VXFK44"
+    item_id = selected_item.split(" ")[0] if selected_item else None
 
 # --- MAIN ANALYSIS LOGIC ---
 if item_id:
