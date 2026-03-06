@@ -23,7 +23,7 @@ product-review-api/
 ├── gra.py              # Additional script / Gradio UI (if applicable)
 ├── i.py / k.py         # Utility/Helper scripts
 ├── .gitignore          # Git ignore configuration
-└── LICENSE             # MIT License
+└── LICENSE             # MIT License````
 
 ## **Prerequisites**
 * Python 3.9+, * pip, * virtual environment tool (optional)
