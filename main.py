@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
     app.state.http_client = httpx.AsyncClient()
     
     # Load unique product list from dataset
-    logger.info(f"📂 Scanning dataset for unique products: {DATA_PATH}")
+    logger.info(f" Scanning dataset for unique products: {DATA_PATH}")
     if os.path.exists(DATA_PATH):
         try:
             # Matches the current RAG indexing limit
@@ -54,12 +54,12 @@ async def lifespan(app: FastAPI):
                 product_list.append(f"{pid} ({count} reviews)")
             
             app.state.products = product_list
-            logger.info(f"✅ Loaded {len(app.state.products)} unique products with counts.")
+            logger.info(f" Loaded {len(app.state.products)} unique products with counts.")
         except Exception as e:
-            logger.error(f"❌ Failed to parse dataset: {e}")
+            logger.error(f" Failed to parse dataset: {e}")
             app.state.products = []
     else:
-        logger.warning(f"⚠️ Dataset not found at {DATA_PATH}. Product list will be empty.")
+        logger.warning(f" Dataset not found at {DATA_PATH}. Product list will be empty.")
         app.state.products = []
         
     yield
@@ -89,20 +89,20 @@ async def read_item(item_id: str):
     try:
         target_url = f"{RAG_ENGINE_URL}/items/{item_id}"
         
-        logger.info(f"📡 Proxying request: {item_id} -> {RAG_ENGINE_URL}")
+        logger.info(f" Proxying request: {item_id} -> {RAG_ENGINE_URL}")
         response = await app.state.http_client.get(target_url, timeout=45.0)
         
         if response.status_code == 200:
             return response.json()
         else:
-            logger.error(f"❌ RAG Engine returned error {response.status_code}: {response.text}")
+            logger.error(f" RAG Engine returned error {response.status_code}: {response.text}")
             raise HTTPException(
                 status_code=response.status_code, 
                 detail=f"RAG Engine error: {response.text}"
             )
             
     except httpx.RequestError as exc:
-        logger.error(f"❌ Connection to RAG Engine failed: {exc}")
+        logger.error(f" Connection to RAG Engine failed: {exc}")
         raise HTTPException(
             status_code=503, 
             detail=f"Could not reach RAG Engine at {RAG_ENGINE_URL}."
@@ -110,5 +110,5 @@ async def read_item(item_id: str):
 
 # Run this on port 8001
 if __name__ == "__main__":
-    logger.info("🚀 Starting Gateway API on http://0.0.0.0:8001")
+    logger.info(" Starting Gateway API on http://0.0.0.0:8001")
     uvicorn.run(app, host="0.0.0.0", port=8001)

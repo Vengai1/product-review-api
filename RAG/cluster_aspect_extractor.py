@@ -31,7 +31,7 @@ class ClusterAspectExtractor:
         # Logic: 1 cluster per ~20 sentences, capped at 25, floor at 5
         n_clusters = min(max(5, num_sentences // 20), 25)
         
-        print(f"📦 Product {product_id}: Found {num_sentences} sentences. Extracting {n_clusters} clusters.")
+        print(f" Product {product_id}: Found {num_sentences} sentences. Extracting {n_clusters} clusters.")
 
         # 2. Generate Embeddings
         embeddings = self.vs.model.encode(sentences)
@@ -56,8 +56,8 @@ if __name__ == "__main__":
     
     for tid in test_ids:
         print(f"\n" + "="*80)
-        print(f"🚀 TESTING PRODUCT: {tid}")
+        print(f" TESTING PRODUCT: {tid}")
         reps = extractor.get_representative_sentences(tid)
-        print(f"✅ Generated {len(reps)} representative sentences:")
+        print(f" Generated {len(reps)} representative sentences:")
         for i, sent in enumerate(reps):
             print(f"  [{i+1}] \"{sent}\"")

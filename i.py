@@ -36,7 +36,7 @@ def guess_product_name_v2(filepath, target_product_id):
     
     # 4. Display the AI's thought process clearly
     print("\n" + "="*45)
-    print(f"🧠 AI ANALYSIS FOR: {target_product_id}")
+    print(f" AI ANALYSIS FOR: {target_product_id}")
     print(f"Data available: {len(product_df)} reviews\n")
     
     print("Top Single Words (Unigrams):")
@@ -53,7 +53,7 @@ def guess_product_name_v2(filepath, target_product_id):
     else:
         best_guess = "Unknown Product"
         
-    print(f"\n🏆 Final AI Guess: ⭐ {best_guess} ⭐")
+    print(f"\n Final AI Guess:  {best_guess} ")
     print("="*45 + "\n")
 
 # --- Run the Prototype ---

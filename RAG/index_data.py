@@ -5,7 +5,7 @@ import time
 import os
 
 def main():
-    print("🚀 Starting Fast Indexing Test (10,000 reviews with spaCy)...")
+    print(" Starting Fast Indexing Test (10,000 reviews with spaCy)...")
     start_time = time.time()
     
     # Calculate paths
@@ -14,7 +14,7 @@ def main():
     data_path = os.path.join(project_root, "data", "Clean_reviews.csv")
     
     if not os.path.exists(data_path):
-        print(f"❌ Error: {data_path} not found. Please run k.py first.")
+        print(f" Error: {data_path} not found. Please run k.py first.")
         return
     
     # 1. Initialize Vector Store (Uses BAAI/bge-small-en-v1.5)
@@ -46,10 +46,10 @@ def main():
             
             total_indexed += len(chunk_df)
             elapsed = time.time() - start_time
-            print(f"✅ Indexed {total_indexed}/{limit} reviews. Elapsed: {elapsed:.2f}s")
+            print(f" Indexed {total_indexed}/{limit} reviews. Elapsed: {elapsed:.2f}s")
 
     end_time = time.time()
-    print(f"\n✨ Fast test completed in {end_time - start_time:.2f} seconds.")
+    print(f"\n Fast test completed in {end_time - start_time:.2f} seconds.")
     print(f"Total reviews indexed: {total_indexed}")
 
 if __name__ == "__main__":

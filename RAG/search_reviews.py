@@ -13,7 +13,7 @@ def main():
     # Initialize VectorStore
     vs = VectorStore()
     
-    print(f"\n🔍 Searching for: '{args.aspect}'" + (f" (Product: {args.product_id})" if args.product_id else ""))
+    print(f"\n Searching for: '{args.aspect}'" + (f" (Product: {args.product_id})" if args.product_id else ""))
     print("=" * 60)
     
     results = vs.search(args.aspect, product_id=args.product_id, top_k=10)
@@ -45,7 +45,7 @@ def main():
         
         print(f"[{displayed_count + 1}] Similarity: {similarity:.1f}%")
         print(f"    Product ID: {meta.get('product_id', 'N/A')}")
-        print(f"    Rating:     {'★' * int(meta.get('rating', 0))}{'☆' * (5 - int(meta.get('rating', 0)))}")
+        print(f"    Rating:     {'' * int(meta.get('rating', 0))}{'' * (5 - int(meta.get('rating', 0)))}")
         print(f"    Sentence:   \"{text}\"")
         print("-" * 60)
         

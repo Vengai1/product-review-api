@@ -33,7 +33,7 @@ st.divider()
 all_products = get_all_products()
 
 if not all_products:
-    st.warning("⚠️ Could not load product list. Ensure the Gateway API is running.")
+    st.warning(" Could not load product list. Ensure the Gateway API is running.")
     # Fallback to manual entry if API is down
     item_id = st.text_input("Enter Product ID manually:")
 else:

@@ -63,17 +63,17 @@ async def get_insights(product_id: str):
     Core RAG analysis endpoint.
     """
     try:
-        logger.info(f"📥 Analysis request for: {product_id}")
+        logger.info(f" Analysis request for: {product_id}")
         insights = engine.get_full_insights(product_id)
         
         if "error" in insights:
-            logger.warning(f"⚠️ Issue processing {product_id}: {insights['error']}")
+            logger.warning(f" Issue processing {product_id}: {insights['error']}")
         
         return insights
     except Exception as e:
-        logger.error(f"❌ Critical error in RAG Engine for {product_id}: {e}")
+        logger.error(f" Critical error in RAG Engine for {product_id}: {e}")
         raise HTTPException(status_code=500, detail="Internal RAG processing error.")
 
 if __name__ == "__main__":
-    logger.info("🚀 Starting RAG Core Server on port 8000")
+    logger.info(" Starting RAG Core Server on port 8000")
     uvicorn.run(app, host="0.0.0.0", port=8000)

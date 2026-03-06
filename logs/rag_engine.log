@@ -60,3 +60,19 @@
 2026-03-06 08:51:14,474 - INFO - Processing insights for Product ID: B00094HIZC
 2026-03-06 08:51:17,141 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
 2026-03-06 08:51:19,239 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:54:40,096 - INFO - 📥 Analysis request for: B0009OMU00
+2026-03-06 08:54:40,096 - INFO - Processing insights for Product ID: B0009OMU00
+2026-03-06 08:54:41,931 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:54:43,979 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:55:25,151 - INFO - 📥 Analysis request for: B0001M0Z3O
+2026-03-06 08:55:25,152 - INFO - Processing insights for Product ID: B0001M0Z3O
+2026-03-06 08:55:27,382 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:55:29,942 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:58:02,136 - INFO - 📥 Analysis request for: B0002NVKWC
+2026-03-06 08:58:02,136 - INFO - Processing insights for Product ID: B0002NVKWC
+2026-03-06 08:58:05,607 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:58:07,758 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:58:42,077 - INFO - 📥 Analysis request for: B0002Q1X6C
+2026-03-06 08:58:42,077 - INFO - Processing insights for Product ID: B0002Q1X6C
+2026-03-06 08:58:43,700 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-06 08:58:45,849 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
