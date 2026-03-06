@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 logger.info("Gateway Logging initialized - writing to logs/gateway.log")
 
 # Configuration
-RAG_ENGINE_URL = "http://172.16.44.58:8000"
+RAG_ENGINE_URL = "http://172.16.44.58:8000" #Replace the given IP with the IP address of the remote machine where RAG Engine is running
 DATA_PATH = "data/Clean_reviews.csv"
 
 @asynccontextmanager
