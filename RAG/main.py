@@ -5,7 +5,7 @@ import uvicorn
 
 # 1. Initialize FastAPI
 app = FastAPI(
-    title="Product Review Insights API",
+    title="Product Review",
     description="Analyzes Amazon reviews to extract aspects, sentiment, and evidence.",
     version="1.0.0"
 )
